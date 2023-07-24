@@ -6,7 +6,7 @@ console.log("Learning Kubernetes server starting...");
 var handler = function(request, response) {
   console.log("Received request from " + request.connection.remoteAddress);
   response.writeHead(200);
-  response.end("You've hit!!!!!@@1123123132!! " + os.hostname() + "\n");
+  response.end("You've hit!!!!232!@@!! " + os.hostname() + "\n");
 };
 
 var www = http.createServer(handler);
