@@ -18,6 +18,9 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+    
+    - name: 2.5 Buildx Setting
+      uses: docker/setup-buildx-action@v2
 
     - name: 3. Build and push
       id: docker_build
@@ -25,4 +28,18 @@ jobs:
       with:
         push: true
         tags: seungzaelee/hostservice:${{ github.sha }}
-        
+  updateYaml:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 1. Checkout
+      uses: actions/checkout@v3
+      with:
+        repository: 'dhssnfl258/host-svc-cd'
+        token: ${{ secrets.GH_TOKEN }}
+    - name: 2. Change Docker Tag
+      run: |
+        sed "s/image: seungzaelee\/node-app:.*/images: seungzae\/node-app:${{ github.sha }}/g"
+        git config --global user.eamil "dhssnfl258@inha.edu"
+        git config --global user.name "dhssnfl258"
+        git commit -am "triggered by github action"
+        git push origin main
