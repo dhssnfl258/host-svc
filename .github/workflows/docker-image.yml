@@ -30,6 +30,7 @@ jobs:
         tags: seungzaelee/hostservice:${{ github.sha }}
   updateYaml:
     runs-on: ubuntu-latest
+    needs: buildImage
     steps:
     - name: 1. Checkout
       uses: actions/checkout@v3
